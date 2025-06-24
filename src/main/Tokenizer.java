@@ -34,7 +34,9 @@ public class Tokenizer {
     public ArrayList<String> tokenize(String input) {
         ArrayList<String> tokens = new ArrayList<>();
         for (String s : sanitize(input).split("\\s+")) {
-            tokens.add(s);
+            if (!s.isBlank()) {
+                tokens.add(s);
+            }
         }
         return tokens;
     }
