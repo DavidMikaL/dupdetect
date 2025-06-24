@@ -1,4 +1,6 @@
-package Main;
+package main;
+
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -6,10 +8,10 @@ public class Main {
         List<String> strings = csvReader.read(path);
 
         Tokenizer tokenizer = new Tokenizer();
-        List<List<Words>> wordLists = new ArrayList<>();
+        List<List<Word>> wordLists = new ArrayList<>();
 
         Partitioner partitioner = new Partitioner();
-        List<List<Words>> partitions = partitioner.partition();
+        List<List<Word>> partitions = partitioner.partition();
 
         DupFinder dupFinder = new DupFinder<>();
         dupFinder.findDuplicates();//write duplicates into csv
