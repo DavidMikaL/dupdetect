@@ -1,5 +1,9 @@
 package objects;
 
+import main.Tokenizer;
+
+import java.util.ArrayList;
+
 public class StorageDevice {
     private int id;
     private String name;
@@ -9,15 +13,31 @@ public class StorageDevice {
     private String description;
     private String category;
 
+    private final ArrayList<Word> tokens = new ArrayList<>();
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public ArrayList<Word> getTokens() {
+        return tokens;
+    }
+
+    public void tokenize() {
+        Tokenizer tokenizer = new Tokenizer();
+        tokens.addAll(tokenizer.tokenize(name));
+    }
+
     @Override
     public String toString() {
-        return "StorageDevice{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price='" + price + '\'' +
-                ", brand='" + brand + '\'' +
-                ", description='" + description + '\'' +
-                ", category='" + category +
-                '}';
+        return id + ": " + name;
     }
 }

@@ -5,6 +5,7 @@ import objects.Word;
 import util.CSVReader;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Main {
@@ -18,7 +19,14 @@ public class Main {
         CSVReader csvReader = new CSVReader();
         List<StorageDevice> storageDevices = csvReader.read(StorageDevice.class, FILE_1);
 
-        System.out.println(storageDevices.get(45));
+//        System.out.println(storageDevices.get(45));
+
+        storageDevices.forEach(StorageDevice::tokenize);
+        ArrayList<ArrayList<Word>> wordList = new ArrayList<>(storageDevices.stream().map(StorageDevice::getTokens).toList());
+
+        for (ArrayList<Word> words : wordList) {
+            System.out.println(words);
+        }
 
 //        Tokenizer tokenizer = new Tokenizer();
 //        List<List<Word>> wordLists = new ArrayList<>();

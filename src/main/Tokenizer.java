@@ -1,5 +1,7 @@
 package main;
 
+import objects.Word;
+
 import java.util.ArrayList;
 
 public class Tokenizer {
@@ -31,11 +33,11 @@ public class Tokenizer {
         return sb.toString();
     }
 
-    public ArrayList<String> tokenize(String input) {
-        ArrayList<String> tokens = new ArrayList<>();
-        for (String s : sanitize(input).split("\\s+")) {
+    public ArrayList<Word> tokenize(String input) {
+        ArrayList<Word> tokens = new ArrayList<>();
+        for (String s : sanitize(input).split("\\s")) {
             if (!s.isBlank()) {
-                tokens.add(s);
+                tokens.add(new Word(s));
             }
         }
         return tokens;
