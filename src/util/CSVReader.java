@@ -8,24 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CSVReader {
-    private String fileName;
-
     /**
      * Provides functionality to read a .csv file
      */
     public CSVReader() { }
-
-    /**
-     * Provides functionality to read a .csv file
-     * @param fileName Path to the .csv file
-     */
-    public CSVReader(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
 
     /**
      * Reads a .csv file and converts each row into an instance of the specified entity type.
@@ -36,7 +22,7 @@ public class CSVReader {
      * @param entityType The class object of the entity type. Its attributes must match the CSV columns.
      * @return           A {@code ArrayList} containing objects of the specified entity type.
      */
-    public <T> ArrayList<T> read(Class<T> entityType) {
+    public <T> ArrayList<T> read(Class<T> entityType, String fileName) {
         ArrayList<T> items = new ArrayList<>();
 
         if (fileName == null) {
