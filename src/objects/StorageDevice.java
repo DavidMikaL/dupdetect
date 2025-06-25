@@ -31,6 +31,10 @@ public class StorageDevice {
         return tokens;
     }
 
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
     public void tokenize() {
         Tokenizer tokenizer = new Tokenizer();
         tokens.addAll(tokenizer.tokenize(name));

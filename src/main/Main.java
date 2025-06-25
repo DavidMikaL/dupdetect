@@ -17,8 +17,8 @@ public class Main {
     static final String OUT_2 = CURRENT_DIR + "/dataSample/ZY2.csv";
 
     public static void main(String[] args) {
-        testingMain();
-        exit(1);
+//        testingMain();
+//        exit(1);
         // TODO hehe
 
         CSVReader csvReader = new CSVReader();
@@ -32,7 +32,13 @@ public class Main {
 
 
         Partitioner partitioner = new Partitioner();
-        List<List<StorageDevice>> partitions = partitioner.partition(storageDevices);
+        ArrayList<StorageDevice>[][] partitions = partitioner.partition(storageDevices);
+
+        for (int i = 0; i < partitioner.brands.size(); i++) {
+            for (int j = 0; j < partitioner.sizes.size(); j++) {
+                System.out.println(partitioner.brands.get(i) + " " + partitioner.sizes.get(j) + ": " + partitions[i][j].size());
+            }
+        }
 //
 //        DupFinder dupFinder = new DupFinder<>();
 //        dupFinder.findDuplicates();//write duplicates into csv
