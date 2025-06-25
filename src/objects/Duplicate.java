@@ -1,6 +1,8 @@
 package objects;
 
-public class Duplicate {
+import java.util.Objects;
+
+public class Duplicate implements Comparable<Duplicate>{
     private int lid;
     private int rid;
 
@@ -15,5 +17,23 @@ public class Duplicate {
     public int getRid() {return rid;}
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Duplicate)) return false;
+        Duplicate key = (Duplicate) o;
+        return lid == key.lid && rid == key.rid;
+    }
 
+    @Override
+    public int compareTo(Duplicate other) {
+        int result = Integer.compare(this.lid, other.lid);
+        if (result != 0) return result;
+        return Integer.compare(this.rid, other.rid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lid, rid);
+    }
 }

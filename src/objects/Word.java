@@ -1,5 +1,7 @@
 package objects;
 
+import java.util.Objects;
+
 public class Word {
     private String word;
 
@@ -46,5 +48,9 @@ public class Word {
     @Override
     public String toString() {
         return word;
+    }
+
+    public int hashCode() {
+        return Objects.hash(word);
     }
 }

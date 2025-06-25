@@ -16,6 +16,8 @@ public class WordImpact {
         List<Duplicate> groundTruth = csvReader.read(Duplicate.class, groundTruthPath);
         storageDevices.forEach(StorageDevice::tokenize);
 
+        TreeSet<Duplicate> duplicateTree = new TreeSet<>(groundTruth);
+
         //Setup word hashmap:
         HashMap<String,Word> wordMap = new HashMap<>();
 
@@ -45,14 +47,14 @@ public class WordImpact {
             if (i % 10 == 0) {
                 System.out.println(i);
             }
-            for (int j = 0; j < n; j++) {
+            for (int j = i + 1; j < n; j++) {
                 {
                     Duplicate possibleDuplicate = new Duplicate(i, j);
-                    boolean isDuplicate = groundTruth.contains(possibleDuplicate);
+                    boolean isDuplicate = duplicateTree.contains(possibleDuplicate);
                     //TODO groundtruth has to be hashTree
 
                     List<Word> iTokens = storageDevices.get(i).getTokens();
-                    List<Word> jTokens = storageDevices.get(i).getTokens();
+                    List<Word> jTokens = storageDevices.get(j).getTokens();
                     List<Word> allTokens = new ArrayList<>();
                     allTokens.addAll(iTokens);
                     allTokens.addAll(jTokens);
@@ -63,21 +65,25 @@ public class WordImpact {
                         boolean inItokens = iTokens.contains(word);
                         boolean inJtokens = jTokens.contains(word);
                         if (isDuplicate) {
+                            //System.out.println("happens 0");
                             if (inItokens && inJtokens) {
+                                //System.out.println("happens 1");
                                 word.inBothHitUp();
                                 word.inBothUp();
                             } else {
+                                //System.out.println("happens 2");
                                 word.inOneHitUp();
                                 word.inOneUp();
                             }
                         } else {
                             if (inItokens && inJtokens) {
+                                //System.out.println("happens 3");
                                 word.inBothUp();
                             } else {
+                                //System.out.println("happens 4");
                                 word.inOneUp();
                             }
                         }
-
                     }
                 }
             }
