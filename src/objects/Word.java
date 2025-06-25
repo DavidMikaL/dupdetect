@@ -4,17 +4,32 @@ public class Word {
     private String word;
 
     private int count;
-
     public int getCount() {return count;}
-    public void countUp()
-    {
-        count++;
-    }
+    public void countUp() {count++;}
 
     private double inBoth;
+    public double getInBoth() {return inBoth;}
+    public void inBothUp() {inBoth++;}
+
     private double inBothHit;
+    public double getInBothHit() {return inBothHit;}
+    public void inBothHitUp() {inBothHit++;}
+
     private double inOne;
+    public double getInOne() {return inOne;}
+    public void inOneUp() {inOne++;}
+
     private double inOneHit;
+    public double getInOneHit() {return inOneHit;}
+    public void inOneHitUp() {inOneHit++;}
+
+    double inOnePercentage;
+    public double getInOnePercentage() {return inOnePercentage;}
+    public void setInOnePercentage(double inOnePercentage) {this.inOnePercentage = inOnePercentage;}
+
+    double inBothPercentage;
+    public double getInBothPercentage() {return inBothPercentage;}
+    public void setInBothPercentage(double inBothPercentage) {this.inBothPercentage = inBothPercentage;}
 
     public Word(String word) {
         this.word = word;
