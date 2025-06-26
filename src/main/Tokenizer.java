@@ -36,7 +36,7 @@ public class Tokenizer {
     public ArrayList<Word> tokenize(String input) {
         ArrayList<Word> tokens = new ArrayList<>();
         for (String s : sanitize(input).split("\\s")) {
-            if (!s.isBlank()) {
+            if (!s.isBlank() && s.length() > 1) {
                 tokens.add(new Word(s));
             }
         }

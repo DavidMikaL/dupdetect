@@ -53,4 +53,11 @@ public class Word {
     public int hashCode() {
         return Objects.hash(word);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Word word1)) return false;
+        return Objects.equals(word, word1.word);
+    }
 }
