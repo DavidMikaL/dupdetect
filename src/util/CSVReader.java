@@ -44,34 +44,55 @@ public class CSVReader {
                 System.exit(1);
             }
 
+            StringBuilder logicalLine = new StringBuilder();
             while ((line = br.readLine()) != null) {
-                String[] values = new String[headers.length];
-                Arrays.fill(values, "");
-                int i = 0;
-                boolean inQuotes = false;
-                for (Character c : line.toCharArray()) {
-                    if (c.equals('"')) {
-                        inQuotes = !inQuotes;
-                    }
-                    if (c.equals(',') && !inQuotes) {
-                        i++;
-                    }
-                    else {
-                        values[i] += c.toString();
-                    }
+                if (!logicalLine.isEmpty()) {
+                    logicalLine.append("\n");
                 }
-//                line.split(delimiter, headers.length);
-                try {
-                    T entity = createEntity(entityType, headers, values);
-                    items.add(entity);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    // TODO Handle this
-//                    System.err.println("Error parsing entity: " + e);
-//                    System.err.println("At: " + line);
-                    // TODO: Eine Zeile ohne gültige ID o.Ä. Damit die Indexe sich nicht verschieben:
-                    items.add(entityType.getDeclaredConstructor().newInstance());
-                } catch (NumberFormatException e) {
-                    // TODO
+                logicalLine.append(line);
+
+                long quoteCount = logicalLine.chars().filter(ch -> ch == '"').count();
+
+                if (quoteCount % 2 == 0) {
+                    String fullLine = logicalLine.toString();
+                    logicalLine.setLength(0);
+
+                    String[] values = new String[headers.length];
+                    Arrays.fill(values, "");
+                    int i = 0;
+                    boolean inQuotes = false;
+                    StringBuilder field = new StringBuilder();
+
+                    for (int idx = 0; idx < fullLine.length(); idx++) {
+                        char c = fullLine.charAt(idx);
+                        if (c == '"') {
+                            if (inQuotes && idx + 1 < fullLine.length() && fullLine.charAt(idx + 1) == '"') {
+                                field.append('"');
+                                idx++;
+                            } else {
+                                inQuotes = !inQuotes;
+                            }
+                        } else if (c == ',' && !inQuotes) {
+                            values[i++] = field.toString();
+                            field.setLength(0);
+                        } else {
+                            field.append(c);
+                        }
+                    }
+                    if (i < headers.length) {
+                        values[i] = field.toString();
+                    }
+
+                    try {
+                        T entity = createEntity(entityType, headers, values);
+                        items.add(entity);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        // TODO
+                        System.exit(1);
+                    } catch (NumberFormatException e) {
+                        // TODO
+                        System.exit(1);
+                    }
                 }
             }
         }

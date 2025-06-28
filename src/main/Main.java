@@ -25,11 +25,9 @@ public class Main {
 //        testingMain();
 //        exit(1);
         // TODO hehe
-
+//
         CSVReader csvReader = new CSVReader();
         List<StorageDevice> storageDevices = csvReader.read(StorageDevice.class, FILE_1);
-
-//        System.out.println(storageDevices.get(45));
 
         storageDevices.forEach(StorageDevice::tokenize);
         //ArrayList<ArrayList<Word>> wordList = new ArrayList<>(storageDevices.stream().map(StorageDevice::getTokens).toList());
@@ -50,6 +48,17 @@ public class Main {
                     for (int l = 0; l < partitioner.storageSizes.size() + 1; l++) {
                         for (int o = 0; o < partitioner.wordCounts.size() + 1; o++) {
                             ArrayList<StorageDevice> partition = partitions[i][j][k][l][o];
+
+//                            if (partition.size() > 5_000) {
+//                                final int fi = i, fj = j, fk = k, fl = l, fo = o;
+//                                String brand = fi < partitioner.brands.size() ? partitioner.brands.get(fi) : "unknown";
+//                                String keyword1 = fj < partitioner.keywords1.size() ? partitioner.keywords1.get(fj) : "??";
+//                                String keyword2 = fk < partitioner.keywords2.size() ? partitioner.keywords2.get(fk) : "??";
+//                                String storageSize = fl < partitioner.storageSizes.size() ? partitioner.storageSizes.get(fl) : "?? GB";
+//                                String wordCount = fo < partitioner.wordCounts.size() ? partitioner.wordCounts.get(fo) : " 99+";
+//                                System.out.println(brand + " " + keyword1 + " " + keyword2 + " " + storageSize + " " + wordCount + " (" + partition.size() + ")");
+//                            }
+
 
                             if (partition.size() < 17_000) {
                                 final int fi = i, fj = j, fk = k, fl = l, fo = o;
@@ -79,6 +88,7 @@ public class Main {
                                                 }
                                             }
 
+                                            int min = Math.min(tokens1.size(), tokens2.size());
                                             double score = (double) intersection / union;
 
                                             if (score >= 0.75) {
@@ -98,14 +108,6 @@ public class Main {
                                 });
 
                                 futures.add(future);
-                            } else {
-//                                final int fi = i, fj = j, fk = k, fl = l, fo = o;
-//                                String brand = fi < partitioner.brands.size() ? partitioner.brands.get(fi) : "unknown";
-//                                String keyword1 = fj < partitioner.keywords1.size() ? partitioner.keywords1.get(fj) : "??";
-//                                String keyword2 = fk < partitioner.keywords2.size() ? partitioner.keywords2.get(fk) : "??";
-//                                String storageSize = fl < partitioner.storageSizes.size() ? partitioner.storageSizes.get(fl) : "?? GB";
-//                                String wordCount = fo < partitioner.wordCounts.size() ? partitioner.wordCounts.get(fo) : " 99+";
-//                                System.out.println(brand + " " + keyword1 + " " + keyword2 + " " + storageSize + " " + wordCount + " (" + partition.size() + ")");
                             }
                         }
                     }
@@ -135,12 +137,6 @@ public class Main {
         validator.writeFalsePositivesFile(CURRENT_DIR+"/falsePositives.txt");
         validator.writeFalseNegativeFile(CURRENT_DIR+"/falseNegatives.txt");
 
-//
-//        DupFinder dupFinder = new DupFinder<>();
-//        dupFinder.findDuplicates();//write duplicates into csv
-//
-//        F1scorer f1scorer = new F1scorer(resultPath);
-//        print(f1scorer.score());
     }
 
 

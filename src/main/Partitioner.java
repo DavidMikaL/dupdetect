@@ -11,11 +11,11 @@ import java.util.regex.Pattern;
 public class Partitioner {
 
     public ArrayList<String> brands = new ArrayList<>(List.of(new String[]{"sandisk", "sony", "kingston", "lexar", "intenso", "toshiba", "samsung", "pny", "transcend"}));
-    public ArrayList<String> keywords1 = new ArrayList<>(List.of(new String[]{"extreme", "ultra"}));
-    public ArrayList<String> keywords2 = new ArrayList<>(List.of(new String[]{"sdhc", "sdxc",  "usb"}));
-    public ArrayList<String> storageSizes = new ArrayList<>(List.of(new String[]{"4gb", "8gb", "10gb", "16gb", "32gb", "64gb", "128gb", "256gb", "512gb",
+    public ArrayList<String> keywords1 = new ArrayList<>(List.of(new String[]{"extreme", "ultra", "ultimate"}));
+    public ArrayList<String> keywords2 = new ArrayList<>(List.of(new String[]{"sdhc", "sdxc",  "usb"})); // TODO Micro Löschen
+    public ArrayList<String> storageSizes = new ArrayList<>(List.of(new String[]{"4gb", "8gb", "10gb", "16gb", "32gb", "64gb", "128gb", "256gb", "512gb", // TODO 2-er Potenz am nähesten an GB/GO
                                                                                 "4go", "8go", "10go", "16go", "32go", "64go", "128go", "256go", "512go"}));
-    public ArrayList<String> wordCounts = new ArrayList<>(List.of(new String[]{"1-8", "9-11", "12-14", "14-16", "17-99"}));
+    public ArrayList<String> wordCounts = new ArrayList<>(List.of(new String[]{"1-8", "7-11", "10-14", "12-16", "15-99"}));
     private final int[][] wordCountRanges;
 
     public Partitioner() {
@@ -88,7 +88,7 @@ public class Partitioner {
             }
 
             // Gigabytes
-            matcher = Pattern.compile("(?i)(\\b\\d+\\s?(GB|TB))").matcher(name);
+            matcher = Pattern.compile("(?i)(\\b\\d+\\s?(GB|GO))").matcher(name);
             int l = storageSizes.size();
 
             if (matcher.find()) {
